@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"time"
+	 "gin-learning/orms"
+)
 
 type Articles struct {
 	ID         int
@@ -14,7 +17,7 @@ type Articles struct {
 
 // 用id查询一条记录
 func (article *Articles) First(id int) *Articles {
-	orm := GetORM()
+	orm := orms.GetGorm()
 	orm.First(article)
 	return article
 }

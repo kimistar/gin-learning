@@ -1,4 +1,4 @@
-package models
+package orms
 
 import (
 	"github.com/jinzhu/gorm"
@@ -45,6 +45,6 @@ func init() {
 	orm.DB().SetConnMaxLifetime(time.Hour)
 }
 
-func GetORM() *gorm.DB {
+func GetGorm() *gorm.DB {
 	return orm
 }

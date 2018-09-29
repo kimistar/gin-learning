@@ -18,9 +18,9 @@ func (this *Articles) Index(ctx *gin.Context) {
 	ret := article.First(1)
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"id":ret.ID,
-		"title":ret.Title,
-		"author":ret.Author,
+		"id":     ret.ID,
+		"title":  ret.Title,
+		"author": ret.Author,
 	})
 }
 
