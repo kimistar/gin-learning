@@ -6,7 +6,6 @@ import (
 	"gin-learning/routers"
 	"github.com/go-ini/ini"
 	"github.com/gin-gonic/gin"
-	_ "gin-learning/orms"
 )
 
 func main() {

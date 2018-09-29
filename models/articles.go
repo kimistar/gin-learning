@@ -2,7 +2,6 @@ package models
 
 import (
 	"time"
-	 "gin-learning/orms"
 )
 
 type Articles struct {
@@ -17,7 +16,7 @@ type Articles struct {
 
 // 用id查询一条记录
 func (article *Articles) First(id int) *Articles {
-	orm := orms.GetGorm()
-	orm.First(article)
+	//orm.Where(&Articles{ID:id}).First(article)
+	orm.Where("id = ?",id).First(article)
 	return article
 }

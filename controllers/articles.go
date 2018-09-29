@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"gin-learning/models"
+	"strconv"
 )
 
 type Articles struct {
@@ -14,8 +15,9 @@ func (this *Articles) Index(ctx *gin.Context) {
 	//	"title": "测试文章",
 	//})
 
+	id,_:=strconv.Atoi(ctx.Query("id"))
 	article := new(models.Articles)
-	ret := article.First(1)
+	ret := article.First(id)
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"id":     ret.ID,
