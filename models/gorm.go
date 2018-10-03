@@ -12,6 +12,10 @@ import (
 var orm *gorm.DB
 
 func init() {
+	var err error
+	var maxIdleConns int
+	var maxOpenConns int
+
 	// load配置
 	cfg, _ := ini.Load("conf/database.ini", "conf/app.ini")
 	// 运行模式
@@ -27,13 +31,20 @@ func init() {
 	// 数据库名称
 	dbname := cfg.Section(mode).Key("mysql.dbname").String()
 	// 最大空闲连接数
-	maxIdleConns, _ := cfg.Section(mode).Key("mysql.max_idle_conns").Int()
+	maxIdleConns, err = cfg.Section(mode).Key("mysql.max_idle_conns").Int()
+	if err != nil {
+		fmt.Printf("%v",err)
+		os.Exit(1)
+	}
 	// 最大打开的连接数
-	maxOpenConns, _ := cfg.Section(mode).Key("mysql.max_open_conns").Int()
+	maxOpenConns, err = cfg.Section(mode).Key("mysql.max_open_conns").Int()
+	if err != nil {
+		fmt.Printf("%v",err)
+		os.Exit(1)
+	}
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, port, dbname)
 
-	var err error
 	orm, err = gorm.Open("mysql", dsn)
 	if err != nil {
 		fmt.Printf("Fail to open mysql: %v", err)

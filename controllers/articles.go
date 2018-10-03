@@ -11,33 +11,33 @@ type Articles struct {
 }
 
 func (this *Articles) Index(ctx *gin.Context) {
-	//ctx.HTML(http.StatusOK, "articles/index.html", gin.H{
-	//	"title": "测试文章",
-	//})
-
-	id,_:=strconv.Atoi(ctx.Query("id"))
-	article := new(models.Articles)
-	ret := article.First(id)
-
-	ctx.JSON(http.StatusOK, gin.H{
-		"id":     ret.ID,
-		"title":  ret.Title,
-		"author": ret.Author,
+	articleModel := new(models.Articles)
+	list:=articleModel.List()
+	ctx.HTML(http.StatusOK, "articles/index.html", gin.H{
+		"list":list,
 	})
 }
 
 func (this *Articles) Create(ctx *gin.Context) () {
-	ctx.String(http.StatusOK, ctx.DefaultQuery("name", "create"))
+	ctx.HTML(http.StatusOK,"articles/create-edit.html",nil)
 }
 
-func (this *Articles) Update(ctx *gin.Context) {
-	ctx.String(http.StatusOK, "update");
+func (this *Articles) Edit(ctx *gin.Context) {
+	id,err:=strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		panic(err)
+	}
+	articleModel:=new(models.Articles)
+	article:=articleModel.First(id)
+	ctx.HTML(http.StatusOK,"articles/create-edit.html",gin.H{
+		"article":article,
+	})
 }
 
 func (this *Articles) Store(ctx *gin.Context) {
 
 }
 
-func (this *Articles) Delete(ctx *gin.Context) {
+func (this *Articles) Del(ctx *gin.Context) {
 
 }

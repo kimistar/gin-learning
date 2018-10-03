@@ -28,10 +28,13 @@ func main() {
 	// 注册路由
 	r := routers.Register()
 
+	// 加载模板文件
+	r.LoadHTMLGlob("templates/**/*")
+
 	// 加载静态文件
 	r.Static("/static", "static")
 
 	http_port := cfg.Section("").Key("http_port").String()
 
-	r.Run(http_port);
+	r.Run(http_port)
 }

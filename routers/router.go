@@ -8,17 +8,16 @@ import (
 func Register() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Recovery())
-	r.LoadHTMLGlob("templates/**/*")
 
 	articles := new(controllers.Articles)
 
-	v1 := r.Group("/v1")
+	v1:=r.Group("/")
 	{
-		v1.GET("/index", articles.Index)
-		v1.GET("/create", articles.Create)
-		v1.GET("/update", articles.Update)
-		v1.GET("/delete", articles.Delete)
-		v1.POST("/store", articles.Store)
+		v1.GET("/articles", articles.Index)
+		v1.GET("/article/create", articles.Create)
+		v1.GET("/article/edit/:id", articles.Edit)
+		v1.GET("/article/del/:id", articles.Del)
+		v1.POST("/article/store", articles.Store)
 	}
 
 	return r
