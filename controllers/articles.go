@@ -35,9 +35,26 @@ func (this *Articles) Edit(ctx *gin.Context) {
 }
 
 func (this *Articles) Store(ctx *gin.Context) {
+	id,_:=strconv.Atoi(ctx.PostForm("id"))
+	title:=ctx.PostForm("title")
+	author:=ctx.PostForm("author")
+	content:=ctx.PostForm("content")
+	articleModel:=new(models.Articles)
+	if id == 0 {
+		articleModel.Insert(title,author,content)
+	} else {
+		articleModel.Edit(id,title,author,content)
+	}
 
+	ctx.Redirect(http.StatusFound,"/articles")
 }
 
 func (this *Articles) Del(ctx *gin.Context) {
-
+	id,err:=strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		panic(err)
+	}
+	articleModel:=new(models.Articles)
+	articleModel.Del(id)
+	ctx.Redirect(http.StatusFound,"/articles")
 }

@@ -43,7 +43,7 @@ func init() {
 		os.Exit(1)
 	}
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, port, dbname)
+	dsn:=username+":"+password+"@tcp("+host+":"+port+")/"+dbname+"?charset=utf8&parseTime=true&loc=Local"
 
 	orm, err = gorm.Open("mysql", dsn)
 	if err != nil {
