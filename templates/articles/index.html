@@ -1,46 +1,46 @@
 {{define "articles/index.html"}}
 {{template "layout/header"}}
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <a href="/article/create" class="btn btn-sm btn-primary">新增</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Content</th>
-                        <th>Click</th>
-                        <th>CreateTime</th>
-                        <th>Operation</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{range $i,$item:=.list}}
-                        <tr>
-                            <td>{{$item.ID}}</td>
-                            <td>{{$item.Title}}</td>
-                            <td>{{$item.Author}}</td>
-                            <td>{{$item.Content}}</td>
-                            <td>{{$item.Click}}</td>
-                            <td>{{$item.CreateTime}}</td>
-                            <td>
-                                <a href="/article/edit/{{$item.ID}}" class="btn btn-sm btn-primary">编辑</a>
-                                <a href="/article/del/{{$item.ID}}" class="btn btn-sm btn-danger">删除</a>
-                            </td>
-                        </tr>
-                    {{end}}
-                    </tbody>
-                </table>
-            </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="/article/create" class="btn btn-sm btn-primary">新增</a>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Content</th>
+                    <th>Click</th>
+                    <th>CreateTime</th>
+                    <th>Operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{range $item:=.list}}
+                <tr>
+                    <td>{{$item.ID}}</td>
+                    <td>{{$item.Title}}</td>
+                    <td>{{$item.Author}}</td>
+                    <td>{{$item.Content}}</td>
+                    <td>{{$item.Click}}</td>
+                    <td>{{$item.CreateTime}}</td>
+                    <td>
+                        <a href="/article/edit/{{$item.ID}}" class="btn btn-sm btn-primary">编辑</a>
+                        <a href="/article/del/{{$item.ID}}" class="btn btn-sm btn-danger">删除</a>
+                    </td>
+                </tr>
+                {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 {{template "layout/footer"}}
 {{ end }}

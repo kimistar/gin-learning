@@ -11,7 +11,7 @@ func Register() *gin.Engine {
 
 	articles := new(controllers.Articles)
 
-	v1:=r.Group("/")
+	v1 := r.Group("/")
 	{
 		v1.GET("/articles", articles.Index)
 		v1.GET("/article/create", articles.Create)
