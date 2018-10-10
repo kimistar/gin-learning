@@ -19,10 +19,10 @@ func main() {
 	// 运行模式
 	mode := cfg.Section("").Key("app_mode").String()
 
-	if mode == "product" {
-		gin.SetMode(gin.ReleaseMode)
-	} else {
+	if mode == "develop" {
 		gin.SetMode(gin.DebugMode)
+	} else {
+		gin.SetMode(gin.ReleaseMode)
 	}
 
 	// 注册路由

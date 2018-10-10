@@ -56,6 +56,6 @@ func init() {
 	orm.DB().SetConnMaxLifetime(time.Hour)
 }
 
-func GetOrm() *gorm.DB {
+func GetGorm() *gorm.DB {
 	return orm
 }
