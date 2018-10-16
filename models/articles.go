@@ -29,32 +29,32 @@ func (_ Articles) List() []Articles {
 	return articles
 }
 
-func (_ Articles) Insert(title, author, content string) bool {
+// 返回数据插入成功后的ID
+func (_ Articles) Insert(title, author, content string) int {
 	createTime := time.Now().Format("2006-01-02 15:04:05")
 	article := &Articles{Title: title, Author: author, Content: content, CreateTime: createTime}
 	orm.Create(article)
-	if orm.NewRecord(article) {
-		return false
-	}
-	return true
+	return article.ID
 }
 
-func (article Articles) Edit(id int, title, author, content string) bool {
+// 返回受影响行数
+func (article Articles) Edit(id int, title, author, content string) int64 {
 	ret := article.First(id)
 	// 查无结果 ret为空的Article
 	if ret.ID == 0 {
-		return false
+		return 0
 	}
 	updateTime := time.Now().Format("2006-01-02 15:04:05")
-	orm.Model(ret).Updates(map[string]interface{}{"title": title, "author": author, "content": content, "update_time": updateTime})
-	return true
+	rowsAffected := orm.Model(ret).Updates(map[string]interface{}{"title": title, "author": author, "content": content, "update_time": updateTime}).RowsAffected
+	return rowsAffected
 }
 
-func (article Articles) Del(id int) bool {
+// 返回受影响行数
+func (article Articles) Del(id int) int64 {
 	ret := article.First(id)
 	if ret.ID == 0 {
-		return false
+		return 0
 	}
-	orm.Delete(ret)
-	return true
+	rowsAffected := orm.Delete(ret).RowsAffected
+	return rowsAffected
 }
