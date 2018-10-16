@@ -5,11 +5,11 @@ import (
 )
 
 type Articles struct {
-	ID         int
-	Title      string
-	Author     string
-	Content    string
-	Click      int
+	ID      int
+	Title   string
+	Author  string
+	Content string
+	Click   int
 	// 避免时区问题，时间简单使用string
 	// time.ParseInLocation("2006-01-02 15:04:05",time.Now().Format("2006-01-02 15:04:05"),time.Local)
 	CreateTime string
@@ -17,21 +17,21 @@ type Articles struct {
 }
 
 // 用id查询一条记录
-func (article *Articles) First(id int) *Articles {
-	orm.Where(&Articles{ID: id}).First(article)
+func (article Articles) First(id int) Articles {
+	orm.Where(&Articles{ID: id}).First(&article)
 	return article
 }
 
 // 获取文章列表
-func (article *Articles) List() []*Articles {
-	var articles []*Articles
+func (_ Articles) List() []Articles {
+	var articles []Articles
 	orm.Select("id,title,author,content,click,create_time").Order("id desc").Find(&articles)
 	return articles
 }
 
-func (article *Articles) Insert(title, author, content string) bool {
+func (_ Articles) Insert(title, author, content string) bool {
 	createTime := time.Now().Format("2006-01-02 15:04:05")
-	article = &Articles{Title: title, Author: author, Content: content, CreateTime: createTime}
+	article := &Articles{Title: title, Author: author, Content: content, CreateTime: createTime}
 	orm.Create(article)
 	if orm.NewRecord(article) {
 		return false
@@ -39,9 +39,10 @@ func (article *Articles) Insert(title, author, content string) bool {
 	return true
 }
 
-func (article *Articles) Edit(id int, title, author, content string) bool {
+func (article Articles) Edit(id int, title, author, content string) bool {
 	ret := article.First(id)
-	if ret == nil {
+	// 查无结果 ret为空的Article
+	if ret.ID == 0 {
 		return false
 	}
 	updateTime := time.Now().Format("2006-01-02 15:04:05")
@@ -49,9 +50,9 @@ func (article *Articles) Edit(id int, title, author, content string) bool {
 	return true
 }
 
-func (article *Articles) Del(id int) bool {
+func (article Articles) Del(id int) bool {
 	ret := article.First(id)
-	if ret == nil {
+	if ret.ID == 0 {
 		return false
 	}
 	orm.Delete(ret)

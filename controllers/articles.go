@@ -1,16 +1,16 @@
 package controllers
 
 import (
+	"gin-learning/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"gin-learning/models"
 	"strconv"
 )
 
 type Articles struct {
 }
 
-func (this *Articles) Index(ctx *gin.Context) {
+func (_ Articles) Index(ctx *gin.Context) {
 	articleModel := new(models.Articles)
 	list := articleModel.List()
 	ctx.HTML(http.StatusOK, "articles/index.html", gin.H{
@@ -18,14 +18,15 @@ func (this *Articles) Index(ctx *gin.Context) {
 	})
 }
 
-func (this *Articles) Create(ctx *gin.Context) () {
+func (_ Articles) Create(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "articles/create-edit.html", nil)
 }
 
-func (this *Articles) Edit(ctx *gin.Context) {
+func (_ Articles) Edit(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
-		panic(err)
+		ctx.Redirect(http.StatusFound, "/articles")
+		return
 	}
 	articleModel := new(models.Articles)
 	article := articleModel.First(id)
@@ -34,7 +35,7 @@ func (this *Articles) Edit(ctx *gin.Context) {
 	})
 }
 
-func (this *Articles) Store(ctx *gin.Context) {
+func (_ Articles) Store(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.PostForm("id"))
 	title := ctx.PostForm("title")
 	author := ctx.PostForm("author")
@@ -49,10 +50,11 @@ func (this *Articles) Store(ctx *gin.Context) {
 	ctx.Redirect(http.StatusFound, "/articles")
 }
 
-func (this *Articles) Del(ctx *gin.Context) {
+func (_ Articles) Del(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
-		panic(err)
+		ctx.Redirect(http.StatusFound, "/articles")
+		return
 	}
 	articleModel := new(models.Articles)
 	articleModel.Del(id)

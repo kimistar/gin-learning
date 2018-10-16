@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"github.com/gin-gonic/gin"
 	"gin-learning/controllers"
+	"github.com/gin-gonic/gin"
 )
 
 func Register() *gin.Engine {
