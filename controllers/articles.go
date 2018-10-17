@@ -10,7 +10,7 @@ import (
 type Articles struct {
 }
 
-func (_ Articles) Index(ctx *gin.Context) {
+func (_ *Articles) Index(ctx *gin.Context) {
 	articleModel := new(models.Articles)
 	list := articleModel.List()
 	ctx.HTML(http.StatusOK, "articles/index.html", gin.H{
@@ -18,11 +18,11 @@ func (_ Articles) Index(ctx *gin.Context) {
 	})
 }
 
-func (_ Articles) Create(ctx *gin.Context) {
+func (_ *Articles) Create(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "articles/create-edit.html", nil)
 }
 
-func (_ Articles) Edit(ctx *gin.Context) {
+func (_ *Articles) Edit(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		ctx.Redirect(http.StatusFound, "/articles")
@@ -35,7 +35,7 @@ func (_ Articles) Edit(ctx *gin.Context) {
 	})
 }
 
-func (_ Articles) Store(ctx *gin.Context) {
+func (_ *Articles) Store(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.PostForm("id"))
 	title := ctx.PostForm("title")
 	author := ctx.PostForm("author")
@@ -50,7 +50,7 @@ func (_ Articles) Store(ctx *gin.Context) {
 	ctx.Redirect(http.StatusFound, "/articles")
 }
 
-func (_ Articles) Del(ctx *gin.Context) {
+func (_ *Articles) Del(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		ctx.Redirect(http.StatusFound, "/articles")

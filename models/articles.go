@@ -17,20 +17,20 @@ type Articles struct {
 }
 
 // 用id查询一条记录
-func (article Articles) First(id int) Articles {
-	orm.Where(&Articles{ID: id}).First(&article)
+func (article *Articles) First(id int) *Articles {
+	orm.Where(&Articles{ID: id}).First(article)
 	return article
 }
 
 // 获取文章列表
-func (_ Articles) List() []Articles {
+func (_ *Articles) List() []Articles {
 	var articles []Articles
 	orm.Select("id,title,author,content,click,create_time").Order("id desc").Find(&articles)
 	return articles
 }
 
 // 返回数据插入成功后的ID
-func (_ Articles) Insert(title, author, content string) int {
+func (_ *Articles) Insert(title, author, content string) int {
 	createTime := time.Now().Format("2006-01-02 15:04:05")
 	article := &Articles{Title: title, Author: author, Content: content, CreateTime: createTime}
 	orm.Create(article)
@@ -38,7 +38,7 @@ func (_ Articles) Insert(title, author, content string) int {
 }
 
 // 返回受影响行数
-func (article Articles) Edit(id int, title, author, content string) int64 {
+func (article *Articles) Edit(id int, title, author, content string) int64 {
 	ret := article.First(id)
 	// 查无结果 ret为空的Article
 	if ret.ID == 0 {
@@ -50,7 +50,7 @@ func (article Articles) Edit(id int, title, author, content string) int64 {
 }
 
 // 返回受影响行数
-func (article Articles) Del(id int) int64 {
+func (article *Articles) Del(id int) int64 {
 	ret := article.First(id)
 	if ret.ID == 0 {
 		return 0
