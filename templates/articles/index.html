@@ -22,17 +22,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{range $item:=.list}}
+                {{range .list}}
                 <tr>
-                    <td>{{$item.ID}}</td>
-                    <td>{{$item.Title}}</td>
-                    <td>{{$item.Author}}</td>
-                    <td>{{$item.Content}}</td>
-                    <td>{{$item.Click}}</td>
-                    <td>{{$item.CreateTime}}</td>
+                    <td>{{.ID}}</td>
+                    <td>{{.Title}}</td>
+                    <td>{{.Author}}</td>
+                    <td>{{.Content}}</td>
+                    <td>{{.Click}}</td>
+                    <td>{{.CreateTime}}</td>
                     <td>
-                        <a href="/article/edit/{{$item.ID}}" class="btn btn-sm btn-primary">编辑</a>
-                        <a href="/article/del/{{$item.ID}}" class="btn btn-sm btn-danger">删除</a>
+                        <a href="/article/edit/{{.ID}}" class="btn btn-sm btn-primary">编辑</a>
+                        <a href="/article/del/{{.ID}}" class="btn btn-sm btn-danger">删除</a>
                     </td>
                 </tr>
                 {{end}}
