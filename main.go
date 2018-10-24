@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"gin-learning/routers"
-	"github.com/go-ini/ini"
 	"github.com/gin-gonic/gin"
+	"github.com/go-ini/ini"
+	"os"
 )
 
 func main() {

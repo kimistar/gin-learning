@@ -1,23 +1,28 @@
 package models
 
 import (
+	"fmt"
+	"github.com/go-ini/ini"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/go-ini/ini"
-	"fmt"
-	"time"
 	"os"
+	"time"
 )
 
 var orm *gorm.DB
 
 func init() {
 	var err error
+	var cfg *ini.File
 	var maxIdleConns int
 	var maxOpenConns int
 
 	// load配置
-	cfg, _ := ini.Load("conf/database.ini", "conf/app.ini")
+	cfg, err = ini.Load("conf/database.ini", "conf/app.ini")
+	if err != nil {
+		fmt.Printf("%v", err)
+		os.Exit(1)
+	}
 	// 运行模式
 	mode := cfg.Section("").Key("app_mode").String()
 	// 主机
