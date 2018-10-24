@@ -1,4 +1,3 @@
-## Dependency
 
 ```
 go get -u github.com/gin-gonic/gin
@@ -7,21 +6,6 @@ go get -u github.com/jinzhu/gorm
 go get -u github.com/go-sql-driver/mysql
 go get github.com/gomodule/redigo/redis
 ```
-
-## Table Articles
-
-```
-type Articles struct {
-    ID      int
-    Title   string
-    Author  string
-    Content string
-    Click   int
-    CreateTime string
-    UpdateTime string
-}
-```
-
 
 ```
 go run main.go
