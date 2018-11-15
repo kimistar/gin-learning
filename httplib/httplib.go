@@ -76,12 +76,12 @@ func (r *HttpRequest) Body(data interface{}) *HttpRequest {
 }
 
 // form写入请求body
-func (r *HttpRequest) FormBody(values url.Values) (*HttpRequest, error) {
+func (r *HttpRequest) FormBody(values url.Values) *HttpRequest {
 	if r.req.Body == nil && values != nil {
 		r.req.Body = ioutil.NopCloser(strings.NewReader(values.Encode()))
 		r.req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	}
-	return r, nil
+	return r
 }
 
 // json写入请求body
