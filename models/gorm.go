@@ -60,7 +60,3 @@ func init() {
 	orm.DB().SetMaxOpenConns(maxOpenConns)
 	orm.DB().SetConnMaxLifetime(time.Hour)
 }
-
-func GetGorm() *gorm.DB {
-	return orm
-}

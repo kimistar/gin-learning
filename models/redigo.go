@@ -64,7 +64,3 @@ func init() {
 		},
 	}
 }
-
-func GetRedisPool() *redis.Pool {
-	return redisPool
-}

@@ -5,15 +5,13 @@ import (
 )
 
 type Articles struct {
-	ID      int
-	Title   string
-	Author  string
-	Content string
-	Click   int
-	// 避免时区问题，时间简单使用string
-	// time.ParseInLocation("2006-01-02 15:04:05",time.Now().Format("2006-01-02 15:04:05"),time.Local)
-	CreateTime string
-	UpdateTime string
+	ID         int
+	Title      string
+	Author     string
+	Content    string
+	Thumbnail  string
+	CreateTime time.Time
+	UpdateTime time.Time
 }
 
 // 用id查询一条记录
@@ -25,14 +23,14 @@ func (article *Articles) First(id int) *Articles {
 // 获取文章列表
 func (_ *Articles) List() []Articles {
 	var articles []Articles
-	orm.Select("id,title,author,content,click,create_time").Order("id desc").Find(&articles)
+	orm.Select("id,title,author,content,thumbnail,create_time").Order("id desc").Find(&articles)
 	return articles
 }
 
 // 返回数据插入成功后的ID
 func (_ *Articles) Insert(title, author, content string) int {
-	createTime := time.Now().Format("2006-01-02 15:04:05")
-	article := &Articles{Title: title, Author: author, Content: content, CreateTime: createTime}
+	now := time.Now()
+	article := &Articles{Title: title, Author: author, Content: content, CreateTime: now, UpdateTime: now}
 	orm.Create(article)
 	return article.ID
 }
@@ -44,7 +42,7 @@ func (article *Articles) Edit(id int, title, author, content string) int64 {
 	if ret.ID == 0 {
 		return 0
 	}
-	updateTime := time.Now().Format("2006-01-02 15:04:05")
+	updateTime := time.Now()
 	rowsAffected := orm.Model(ret).Updates(map[string]interface{}{"title": title, "author": author, "content": content, "update_time": updateTime}).RowsAffected
 	return rowsAffected
 }
