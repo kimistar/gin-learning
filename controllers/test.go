@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"core"
+	"gin-learning/core"
 	"github.com/gin-gonic/gin"
 )
 

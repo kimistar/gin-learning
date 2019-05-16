@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"core"
+	"gin-learning/core"
 	"gin-learning/controllers"
 	"gin-learning/middleware"
 	"github.com/gin-gonic/gin"

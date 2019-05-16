@@ -1,6 +1,6 @@
 package middleware
 
-import "core"
+import "gin-learning/core"
 
 func Auth(c *core.Context) {
 	if false {

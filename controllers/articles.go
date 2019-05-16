@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"core"
+	"gin-learning/core"
 	"gin-learning/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
