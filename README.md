@@ -1,10 +1,8 @@
 
 ```
-govendor sync
-```
+go build
+./gin-learning
 
-```
-go run main.go
 localhost:8080/articles
 ```
 
