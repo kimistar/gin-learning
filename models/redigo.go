@@ -2,51 +2,30 @@ package models
 
 import (
 	"fmt"
-	"github.com/go-ini/ini"
 	"github.com/gomodule/redigo/redis"
 	"os"
+	"strconv"
 	"time"
 )
 
 var redisPool *redis.Pool
 
-func init() {
-	var err error
-	var cfg *ini.File
-	var maxIdleConns int
-	var maxOpenConns int
-
-	// load配置
-	cfg, err = ini.Load("conf/database.ini", "conf/app.ini")
-	if err != nil {
-		fmt.Printf("%v", err)
-		os.Exit(1)
-	}
-	// 运行模式
-	mode := cfg.Section("").Key("app_mode").String()
+func ConnectRedis() {
 	// 主机
-	host := cfg.Section(mode).Key("redis.host").String()
+	host := GetConfig("redis.host")
 	// 端口
-	port := cfg.Section(mode).Key("redis.port").String()
+	port := GetConfig("redis.port")
 	// 密码
-	password := cfg.Section(mode).Key("redis.password").String()
+	password := GetConfig("redis.password")
 	// 最大空闲连接数
-	maxIdleConns, err = cfg.Section(mode).Key("redis.max_idle_conns").Int()
-	if err != nil {
-		fmt.Printf("%v", err)
-		os.Exit(1)
-	}
+	maxIdleConns, _ := strconv.Atoi(GetConfig("redis.max_idle_conns"))
 	// 最大打开的连接数
-	maxOpenConns, err = cfg.Section(mode).Key("redis.max_open_conns").Int()
-	if err != nil {
-		fmt.Printf("%v", err)
-		os.Exit(1)
-	}
+	maxOpenConns, _ := strconv.Atoi(GetConfig("redis.max_open_conns"))
 
 	redisPool = &redis.Pool{
 		MaxIdle:     maxIdleConns,
 		MaxActive:   maxOpenConns,
-		IdleTimeout: 240 * time.Second,
+		IdleTimeout: 5 * time.Minute,
 		Dial: func() (redis.Conn, error) {
 			c, err := redis.Dial("tcp", host+":"+port)
 			if err != nil {

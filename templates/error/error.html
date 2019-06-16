@@ -1,0 +1,46 @@
+{{define "error/error"}}
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>错误</title>
+    <link rel="icon" href="data:;base64,=">
+    <link rel="stylesheet" href="//res.wx.qq.com/open/libs/weui/1.0.2/weui.min.css"/>
+</head>
+<body ontouchstart>
+
+<div class="weui-msg" id="invoice_show">
+    <div class="weui-msg__icon-area">
+        <i class="weui-icon-info weui-icon_msg"></i>
+    </div>
+    <div class="weui-msg__text-area">
+        <h2 class="weui-msg__title">错误码: {{.retcode}}</h2>
+        <h2 class="weui-msg__title">{{.msg}}</h2>
+        <p class="weui-msg__desc">{{.data}}</p>
+    </div>
+</div>
+</body>
+<script>
+    forbidUpdateWxFont();
+    function forbidUpdateWxFont() {
+        if (typeof window.WeixinJSBridge == "undefined") {
+            return document.addEventListener("WeixinJSBridgeReady", function(e) {
+                setTimeout(function() {
+                    window.WeixinJSBridge.invoke('setFontSizeCallback', {"fontSize": 0})
+                    window.WeixinJSBridge.on('menu:setfont', function() {
+                        window.WeixinJSBridge.invoke('setFontSizeCallback', {'fontSize': 0})
+                    })
+                }, 0)
+            })
+        }
+        setTimeout(function() {
+            window.WeixinJSBridge.invoke('setFontSizeCallback', {"fontSize": 0})
+            window.WeixinJSBridge.on('menu:setfont', function() {
+                window.WeixinJSBridge.invoke('setFontSizeCallback', {'fontSize': 0})
+            })
+        }, 0)
+    }
+</script>
+</html>
+{{end}}
